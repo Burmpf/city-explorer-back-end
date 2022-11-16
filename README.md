@@ -32,3 +32,5 @@ Start time:
 Finish time: 
 
 Actual time needed to complete: 
+
+[img](images/My%20project-1.jpg)
