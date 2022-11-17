@@ -9,14 +9,16 @@ const { request } = require('express');
 const express = require('express');
 const weather = require('./data/weather.json')
 
+
 //bring in the .env file using 'npm i dotenv'
 require('dotenv').config();
 
 //we must include cors if we want to share resources over the web
 const cors = require('cors');
+
 //routes
 const app = express();
-
+app.use(cors());
 //define the PORT and validate that the .env file works
 const PORT = process.env.PORT || 3002;
 
@@ -30,11 +32,17 @@ const PORT = process.env.PORT || 3002;
 app.get('/weather', (request, response)=>{
 let cityName = request.query.city_name;
 
-let selectedCity = data.find(city => city.city_name === cityName);
+let selectedCity = weather.find(city => city.city_name === cityName);
+console.log(selectedCity);
 
-let filterCity = new City(selectedCity);
-letcityForcast = new Forcast(selectedCity);
 
+
+let weatherArr = selectedCity.data.map(day => new Forcast(day));
+
+
+// let filterCity = new City(selectedCity);
+// let cityForcast = new Forcast(selectedCity);
+response.send(weatherArr);
 });
 
 
@@ -57,8 +65,8 @@ class City {
 
 class Forcast {
     constructor(cityObject){
-        this.date = cityObject.date;
-        this.description = cityObject.description;
+        this.date = cityObject.datetime;
+        this.description = cityObject.weather.description;
     }
 }
 //error handlers
