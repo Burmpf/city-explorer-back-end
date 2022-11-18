@@ -29,46 +29,48 @@ const PORT = process.env.PORT || 3002;
 //app.get() correlates to axios.get()
 //app.get() takes in a parament or url in quotes, and a callback function
 
-app.get('/weather', (request, response)=>{
-let cityName = request.query.city_name;
+// app.get('/weather', (request, response)=>{
+// let cityName = request.query.city_name;
 
-let selectedCity = weather.find(city => city.city_name === cityName);
-console.log(selectedCity);
-
-
-
-let weatherArr = selectedCity.data.map(day => new Forcast(day));
+// let selectedCity = weather.find(city => city.city_name === cityName);
+// console.log(selectedCity);
 
 
-// let filterCity = new City(selectedCity);
-// let cityForcast = new Forcast(selectedCity);
-response.send(weatherArr);
-});
+
+// let weatherArr = selectedCity.data.map(day => new Forcast(day));
+
+
+// // let filterCity = new City(selectedCity);
+// // let cityForcast = new Forcast(selectedCity);
+// response.send(weatherArr);
+// });
 
 
 
 // '*' wildcard
 // this will run for any route not defined above
-app.get('*', (request, response)=> {
+app.get('*', (request, response) => {
     response.send('that route does not exsist')
 });
 
 
 class City {
-    constructor(cityObject){
+    constructor(cityObject) {
         this.lat = cityObject.lat;
         this.lon = cityObject.lon;
         this.city = cityObject.city_name;
-        
+
     }
 }
 
 class Forcast {
-    constructor(cityObject){
+    constructor(cityObject) {
         this.date = cityObject.datetime;
         this.description = cityObject.weather.description;
     }
 }
+
+
 //error handlers
 
 //start the server
